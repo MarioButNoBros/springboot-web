@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,9 +18,15 @@ public class PathVariableController {
     @Value("${config.message}")
     private String message;
     @Value("${config.listOfValue}")
-    private String[] listOfValue;
+    private List<String> listOfValue;
     @Value("${config.code}")
     private Integer code;
+    @Value("#{${config.valuesMap}}")
+    private Map<String, Object> valuesMap;
+    @Value("#{${config.valuesMap}.product}")
+    private String product;
+    @Value("#{${config.valuesMap}.price}")
+    private String price;
 
     @GetMapping("/baz/{message}")
     public ParamDto baz(@PathVariable String message){
@@ -54,6 +61,9 @@ public class PathVariableController {
         json.put("code", code);
         json.put("message", message);
         json.put("listOfValue", listOfValue);
+        json.put("valuesMap", valuesMap);
+        json.put("product", product);
+        json.put("price", price);
 
         return json;
 
